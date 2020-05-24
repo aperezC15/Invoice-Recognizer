@@ -9,9 +9,9 @@ de diferentes proveedores y luego realizar el análisis con una factura que
 no es del entrenamiento para poder validar los resultados, esto de forma 
 manual. 
 
-[![Ejemplo](/imagenes/Ejemplo1.PNG)](imagenes/Ejemplo1.PNG)
+[![Ejemplo](/imagenes/Ejemplo_1.PNG)](imagenes/Ejemplo_1.PNG)
 
-[![Ejemplo](/imagenes/Ejemplo1-1.PNG)](imagenes/Ejemplo1-1.PNG)
+[![Ejemplo](/imagenes/Ejemplo_11.PNG)](imagenes/Ejemplo_11.PNG)
 
 [![Ejemplo](/imagenes/Ejemplo2.PNG)](imagenes/Ejemplo2.PNG)
 
