@@ -41,7 +41,7 @@ app.get('/invoice/blobs', async (req, res, next) => {
 	res.json({ data: blobs });
 });
 
-app.post('/api/upload-invoice', (req, res, next) => {
+app.post('/api/upload', (req, res, next) => {
 	const form = formidable({ uploadDir: 'facturas/' });
 
 	form.on('file', (filename, file) => {
