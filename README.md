@@ -22,3 +22,5 @@ manual.
 ## Segundo Entregable
 
 El segundo entregable consiste en crear una página web para poder subir las facturas que el usuario desee, al contenedor de azure, y así realizar el entrenamiento posteriormente.
+
+[![PáginaWeb](/imagenes/Página_web.JPEG)](imagenes/Página_web.JPEG)
