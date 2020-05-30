@@ -8,6 +8,17 @@ require('dotenv').config();
 
 app.use(cors());
 
+app.get('/', (req, res) => {
+	res.send(`
+    <h2>With <code>"express"</code> npm package</h2>
+    <form action="/api/upload" enctype="multipart/form-data" method="post">
+      <div>Text field title: <input type="text" name="title" /></div>
+      <div>File: <input type="file" name="someExpressFiles" multiple="multiple" /></div>
+      <input type="submit" value="Upload" />
+    </form>
+  `);
+});
+
 app.get('/invoice/blobs', async (req, res, next) => {
 	const blobs = [];
 	// Cuenta y clave del contenedor
@@ -28,6 +39,22 @@ app.get('/invoice/blobs', async (req, res, next) => {
 		blobs.push({ name: blob.name, createdOn: blob.properties.createdOn });
 	}
 	res.json({ data: blobs });
+});
+
+app.post('/api/upload-invoice', (req, res, next) => {
+	const form = formidable({ uploadDir: 'facturas/' });
+
+	form.on('file', (filename, file) => {
+		form.emit('data', { name: 'file', key: filename, value: file });
+	});
+
+	form.parse(req, (err, fields, files) => {
+		if (err) {
+			next(err);
+			return;
+		}
+		res.json({ fields, files });
+	});
 });
 
 app.listen(3001, () => console.log('Escuchando en el puerto 3001'));
