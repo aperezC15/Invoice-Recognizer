@@ -219,13 +219,16 @@ export default function CustomizedSteppers() {
         {activeStep === steps.length ? (
           <div>
             <Typography color="primary" variant="h5" className={classes.instructions}>
+            <Button variant="contained" onClick={handleReset} className={classes.button}>
               Ha completado todos los pasos
               <CheckCircleTwoToneIcon fontSize='large'></CheckCircleTwoToneIcon>
+              </Button>
+             
              
             </Typography>
-            <Button variant="contained" onClick={handleReset} className={classes.button}>
-              Reiniciar el proceso?
-            </Button>
+            
+              
+           
           </div>
         ) : (
           <div>
