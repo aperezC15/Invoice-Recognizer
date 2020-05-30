@@ -4,7 +4,7 @@ Utilizar del aprendizaje automatizado o Machine Learning es la tendencia actual 
 
 ## Primer Entregable
 
-El primer entregable consistió en realizar el entrenamiento con facturas
+El primer entregable consiste en realizar el entrenamiento con facturas
 de diferentes proveedores y luego realizar el análisis con una factura que
 no es del entrenamiento para poder validar los resultados, esto de forma 
 manual. 
@@ -19,3 +19,6 @@ manual.
 
 [![Ejemplo](/imagenes/Ejemplo3.PNG)](imagenes/Ejemplo3.PNG)
 
+## Segundo Entregable
+
+El segundo entregable consiste en crear una página web para poder subir las facturas que el usuario desee, al contenedor de azure, y así realizar el entrenamiento posteriormente.
