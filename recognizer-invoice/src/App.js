@@ -1,6 +1,6 @@
 import React from 'react';
 import Barra from './componentes/home.js'
-import Stepper from './componentes/stepper.js'
+import Stepper from './view/stepper.js'
 import './App.css';
 
 function App() {
