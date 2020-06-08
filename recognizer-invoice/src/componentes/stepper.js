@@ -15,6 +15,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
 import BackupIcon from '@material-ui/icons/Backup';
 
+
 const useQontoStepIconStyles = makeStyles({
 	root: {
 		color: '#eaeaf0',
@@ -193,9 +194,8 @@ function getStepContent(step) {
 	}
 }
 
-export default function CustomizedSteppers() {
+export default function CustomizedSteppers(props) {
   const classes = useStyles();
-  const useColors = useColorlibStepIconStyles();
 	//asignar en qué stepper empieza
 	const [ activeStep, setActiveStep ] = React.useState(0);
 	const steps = getSteps();
@@ -233,6 +233,7 @@ export default function CustomizedSteppers() {
 					id="contained-button-file"
 					multiple
 					type="file"
+					onChange={props.verEstadoSubir}
 				/>
 				<label htmlFor="contained-button-file">
 					<Button variant="contained"  component="span" className={classes.buttonElegir}>
@@ -240,10 +241,10 @@ export default function CustomizedSteppers() {
 					</Button>
 				</label>
 
-        <Button variant="contained"  component="span" className={classes.buttonSubir}>
-					  Subir archivos
-            <BackupIcon/>
-					</Button>
+				<Button variant="contained"  component="span" className={classes.buttonSubir} onClick={props.enviarArchivos} >
+					Subir archivos
+					<BackupIcon/>
+				</Button>
 			</div>
 		);
 	};
