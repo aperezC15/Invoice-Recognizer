@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const form = formidable(multer({ uploadDir: 'facturas/', multiples: true }));
+const form = formidable({ uploadDir: 'facturas/', multiples: true });
 /*app.use(
 	cors()(
 		multer({
