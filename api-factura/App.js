@@ -1,31 +1,32 @@
 const express = require('express');
 const cors = require('cors');
 const formidable = require('formidable');
+const bodyParser = require('body-parser');
 const blobService = require('./services/blobservice');
 const fs = require('fs');
+const multer = require('multer');
 
 const app = express();
 require('dotenv').config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-//app.use(cors());
-// Configurar cabeceras y cors
-app.use((req, res, next) => {
-	// Dominio que tengan acceso (ej. 'http://example.com')
-	res.setHeader('Access-Control-Allow-Origin', '*');
+const form = formidable(multer({ uploadDir: 'facturas/', multiples: true }));
+/*app.use(
+	cors()(
+		multer({
+			dest: '/facturas',
+			rename: function(fieldname, filename) {
+				return filename.replace(/\W+/g, '-').toLowerCase();
+			}
+		})
+	)
+);
 
-	// Metodos de solicitud que deseas permitir
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-
-	// Encabecedados que permites (ej. 'X-Requested-With,content-type')
-	res.setHeader('Access-Control-Allow-Headers', '*');
-
-	next();
-});
-const form = formidable({ uploadDir: 'facturas/', multiples: true });
-
+app.use(express.static(__dirname + '/facturas'));
+*/
 app.get('/', (req, res) => {
 	res.send(`
     <h2>With <code>"express"</code> npm package</h2>
@@ -52,6 +53,7 @@ app.get('/invoice/blobs', async (req, res, next) => {
 });
 
 app.post('/invoice/blobs', async (req, res, next) => {
+	req._multipart = true;
 	// Obtener el contenedor
 	const containerName = 'formrecocontainer';
 	const containerClient = blobService.getContainerClient(containerName);
