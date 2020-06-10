@@ -6,50 +6,49 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 function LinearProgressWithLabel(props) {
-  return (
-    <Box display="flex" alignItems="center">
-      <Box width="100%" mr={1}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-      <Box minWidth={35}>
-        <Typography variant="body2" color="textSecondary">{`${Math.round(
-          props.value,
-        )}%`}</Typography>
-      </Box>
-    </Box>
-  );
+	return (
+		<Box display="flex" alignItems="center">
+			<Box width="100%" mr={3}>
+				<LinearProgress variant="determinate" {...props} />
+			</Box>
+			<Box minWidth={50}>
+				<Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
+			</Box>
+		</Box>
+	);
 }
 
 LinearProgressWithLabel.propTypes = {
-  /**
+	/**
    * The value of the progress indicator for the determinate and buffer variants.
    * Value between 0 and 100.
    */
-  value: PropTypes.number.isRequired,
+	value: PropTypes.number.isRequired
 };
 
 const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
+	root: {
+		width: '100%',
+		height: 50
+	}
 });
 
 export default function LinearWithValueLabel() {
-  const classes = useStyles();
-  const [progress, setProgress] = React.useState(10);
+	const classes = useStyles();
+	const [ progress, setProgress ] = React.useState(0);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress + 10));
-    }, 800);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+	React.useEffect(() => {
+		const timer = setInterval(() => {
+			setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+		}, 800);
+		return () => {
+			clearInterval(timer);
+		};
+	}, []);
 
-  return (
-    <div className={classes.root}>
-      <LinearProgressWithLabel value={progress} />
-    </div>
-  );
+	return (
+		<div className={classes.root}>
+			<LinearProgressWithLabel value={progress} />
+		</div>
+	);
 }

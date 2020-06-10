@@ -5,6 +5,10 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import BackupIcon from '@material-ui/icons/Backup';
+import PropTypes from 'prop-types';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -35,14 +39,40 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
 		color: '#fff',
 		marginTop: '4em'
+	},
+	barra: {
+		width: '100%',
+		height: 30
 	}
 }));
+
+function LinearProgressWithLabel(props) {
+	return (
+		<Box display="flex" alignItems="center">
+			<Box width="100%" mr={3}>
+				<LinearProgress variant="determinate" {...props} />
+			</Box>
+			<Box minWidth={50}>
+				<Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
+			</Box>
+		</Box>
+	);
+}
+
+LinearProgressWithLabel.propTypes = {
+	/**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+	value: PropTypes.number.isRequired
+};
 
 // componente
 const FormularioFacturas = () => {
 	const classes = useStyles();
 
 	const [ selectedFile, setSelectedFile ] = useState(null);
+	const [ progress, setProgress ] = React.useState(0);
 
 	useEffect(
 		() => {
@@ -100,6 +130,9 @@ const FormularioFacturas = () => {
 				Subir archivos
 				<BackupIcon />
 			</Button>
+			<div className={classes.barra}>
+				<LinearProgressWithLabel value={progress} />
+			</div>
 		</div>
 	);
 };
