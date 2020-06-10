@@ -13,8 +13,9 @@ import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import PublishIcon from '@material-ui/icons/Publish';
 import DescriptionIcon from '@material-ui/icons/Description';
 import CheckCircleTwoToneIcon from '@material-ui/icons/CheckCircleTwoTone';
-import BackupIcon from '@material-ui/icons/Backup';
 
+// Formulario para subir las facturas
+import FormularioFacturas from './FormularioFacturas';
 
 const useQontoStepIconStyles = makeStyles({
 	root: {
@@ -161,20 +162,20 @@ const useStyles = makeStyles((theme) => ({
 		display: 'none'
 	},
 	buttonElegir: {
-    margin: 10,
-    background: '#f50057',
-    color: 'white'
-  },
-  buttonSubir: {
-    background: '#2196f3',
-    color: 'white',
-  },
-  buttonCompletar: {
-    backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+		margin: 10,
+		background: '#f50057',
+		color: 'white'
+	},
+	buttonSubir: {
+		background: '#2196f3',
+		color: 'white'
+	},
+	buttonCompletar: {
+		backgroundImage: 'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
 		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
-    color: '#fff',
-    marginTop: '4em'
-  }
+		color: '#fff',
+		marginTop: '4em'
+	}
 }));
 
 function getSteps() {
@@ -195,7 +196,7 @@ function getStepContent(step) {
 }
 
 export default function CustomizedSteppers(props) {
-  const classes = useStyles();
+	const classes = useStyles();
 	//asignar en qué stepper empieza
 	const [ activeStep, setActiveStep ] = React.useState(0);
 	const steps = getSteps();
@@ -215,38 +216,14 @@ export default function CustomizedSteppers(props) {
 	const displayStep = () => {
 		switch (activeStep) {
 			case 0:
-				return displayFirstStep();
+				return FormularioFacturas();
 			case 1:
 				return displaySecondStep();
 			case 2:
 				return displayThirdStep();
+			default:
+				return null;
 		}
-	};
-
-	const displayFirstStep = () => {
-		return (
-			<div>
-				<input
-					color="secondary"
-					accept=".pdf"
-					className={classes.input}
-					id="contained-button-file"
-					multiple
-					type="file"
-					onChange={props.verEstadoSubir}
-				/>
-				<label htmlFor="contained-button-file">
-					<Button variant="contained"  component="span" className={classes.buttonElegir}>
-						Elegir archivos
-					</Button>
-				</label>
-
-				<Button variant="contained"  component="span" className={classes.buttonSubir} onClick={props.enviarArchivos} >
-					Subir archivos
-					<BackupIcon/>
-				</Button>
-			</div>
-		);
 	};
 
 	const displaySecondStep = () => {
@@ -294,6 +271,7 @@ export default function CustomizedSteppers(props) {
 						<Typography variant="h5" className={classes.instructions}>
 							{getStepContent(activeStep)}
 						</Typography>
+
 						<div className={classes.root}>{displayStep()}</div>
 
 						<div className="mb3">
