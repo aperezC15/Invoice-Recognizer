@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
 	barra: {
 		width: '100%',
 		height: 30
+	},
+	alertconf: {
+		width: '100%',
+		'& > * + *': {
+			marginTop: theme.spacing(2)
+		}
 	}
 }));
 
@@ -102,6 +109,9 @@ const FormularioFacturas = () => {
 			.then((res) => {
 				// then print response status
 				console.log(res);
+				if (res.status === 200) {
+					this.mensaje = 'Se ha completado correctamente la subida';
+				}
 			})
 			.catch((err) => console.log(err));
 
@@ -130,8 +140,8 @@ const FormularioFacturas = () => {
 				Subir archivos
 				<BackupIcon />
 			</Button>
-			<div className={classes.barra}>
-				<LinearProgressWithLabel value={progress} />
+			<div className={classes.alertconf}>
+				<Alert variant="filled" />
 			</div>
 		</div>
 	);
