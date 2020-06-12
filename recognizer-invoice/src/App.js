@@ -1,16 +1,19 @@
 import React from 'react';
-import Barra from './componentes/home.js'
-import Stepper from './view/stepper.js'
+
+import InvoiceState from './context/InvoiceState';
+import Barra from './componentes/home.js';
+import Stepper from './view/stepper.js';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <Barra></Barra>
-      <Stepper></Stepper>
-      
-    </div>
-  );
+	return (
+		<div className="App">
+			<Barra />
+			<InvoiceState>
+				<Stepper />
+			</InvoiceState>
+		</div>
+	);
 }
 
 export default App;

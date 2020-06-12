@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 // material ui
@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Alert from '@material-ui/lab/Alert';
+import InvoiceContext from '../context/InvoiceContext';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -81,6 +81,10 @@ const FormularioFacturas = () => {
 	const [ selectedFile, setSelectedFile ] = useState(null);
 	const [ progress, setProgress ] = React.useState(0);
 
+	const invoiceContext = useContext(InvoiceContext);
+
+	console.log('contexto', invoiceContext.factura);
+
 	useEffect(
 		() => {
 			if (selectedFile) console.log('length of selectedFile', selectedFile.length);
@@ -140,9 +144,9 @@ const FormularioFacturas = () => {
 				Subir archivos
 				<BackupIcon />
 			</Button>
-			<div className={classes.alertconf}>
+			{/* <div className={classes.alertconf}>
 				<Alert variant="filled" />
-			</div>
+			</div> */}
 		</div>
 	);
 };
