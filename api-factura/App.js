@@ -136,7 +136,7 @@ app.post('/analyze', upload.single('factura'), async (req, res) => {
 	await poller.pollUntilDone();
 	const forms = poller.getResult();
 
-	res.status(201).json({ message: 'El analisis ha finalizado con éxito!', forms });
+	res.status(201).json({ message: 'El análisis ha finalizado con éxito!', forms });
 });
 
 app.listen(3001, () => console.log('Escuchando en el puerto 3001'));
