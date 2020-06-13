@@ -121,4 +121,22 @@ app.post('/training', async (req, res) => {
 	}
 });
 
+app.post('/analyze', upload.single('factura'), async (req, res) => {
+	const client = formRecognizer.getRecognizerClient();
+	const path = req.file.path;
+	const modelId = req.body.modelId;
+
+	const readStream = fs.createReadStream(path);
+
+	const poller = await client.beginRecognizeCustomForms(modelId, readStream, 'application/pdf', {
+		onProgress: (state) => {
+			console.log(`status: ${state.status}`);
+		}
+	});
+	await poller.pollUntilDone();
+	const forms = poller.getResult();
+
+	res.status(201).json({ message: 'El analisis ha finalizado con éxito!', forms });
+});
+
 app.listen(3001, () => console.log('Escuchando en el puerto 3001'));
