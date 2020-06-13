@@ -1,10 +1,11 @@
 import React, { useReducer } from 'react';
 import InvoiceReducer from './InvoiceReducer';
-import { SET_MODELID } from '../types';
+import { SET_MODELID, SET_ANALYSIS_RESULT } from '../types';
 import InvoiceContext from './InvoiceContext';
 
 const initialState = {
-	modelId: null
+	modelId: '73310f24-95e1-4116-b70c-d04725a5755b',
+	analysisResult: null
 };
 
 const InvoiceState = ({ children }) => {
@@ -17,11 +18,19 @@ const InvoiceState = ({ children }) => {
 		});
 	};
 
+	const setAnalysisResult = (result) => {
+		dispatch({
+			type: SET_ANALYSIS_RESULT,
+			payload: result
+		});
+	};
+
 	return (
 		<InvoiceContext.Provider
 			value={{
 				modelId: state.modelId,
-				setModelId
+				setModelId,
+				setAnalysisResult
 			}}
 		>
 			{children}
