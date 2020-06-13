@@ -1,11 +1,11 @@
-import { ALGO } from '../types';
+import { SET_MODELID } from '../types';
 
 export default (state, action) => {
 	switch (action.type) {
-		case ALGO:
+		case SET_MODELID:
 			return {
 				...state,
-				factura: 'mifactura'
+				modelId: action.payload
 			};
 		default:
 			return state;

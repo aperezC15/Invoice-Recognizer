@@ -1,1 +1,1 @@
-export const ALGO = 'ALGO';
+export const SET_MODELID = 'SET_MODELID';

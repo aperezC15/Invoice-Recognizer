@@ -7,11 +7,7 @@ import Button from '@material-ui/core/Button';
 import BackupIcon from '@material-ui/icons/Backup';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-
-function Alert(props) {
-	return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+import Alert from './Alert';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
+import InvoiceContext from '../context/InvoiceContext';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,6 +12,11 @@ const useStyles = makeStyles((theme) => ({
 
 const AnalysisForm = () => {
 	const classes = useStyles();
+
+	const invoiceContext = useContext(InvoiceContext);
+	const { modelId } = invoiceContext;
+
+	console.log('modelId', modelId);
 
 	return (
 		<div>

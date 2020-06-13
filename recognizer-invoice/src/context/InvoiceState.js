@@ -1,26 +1,27 @@
 import React, { useReducer } from 'react';
 import InvoiceReducer from './InvoiceReducer';
-import { ALGO } from '../types';
+import { SET_MODELID } from '../types';
 import InvoiceContext from './InvoiceContext';
 
 const initialState = {
-	factura: 'mi factura'
+	modelId: null
 };
 
 const InvoiceState = ({ children }) => {
 	const [ state, dispatch ] = useReducer(InvoiceReducer, initialState);
 
-	const agregarFactura = () => {
+	const setModelId = (id) => {
 		dispatch({
-			type: ALGO
+			type: SET_MODELID,
+			payload: id
 		});
 	};
 
 	return (
 		<InvoiceContext.Provider
 			value={{
-				factura: state.factura,
-				agregarFactura
+				modelId: state.modelId,
+				setModelId
 			}}
 		>
 			{children}
