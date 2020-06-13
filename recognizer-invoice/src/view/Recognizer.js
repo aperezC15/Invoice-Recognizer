@@ -15,16 +15,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-	return [ 'Entrenamiento', 'Análisis', 'Resultados' ];
+	return [ 'Subir Facturas', 'Entrenamiento', 'Análisis', 'Resultados' ];
 }
 
 // el modo del step es de acuerdo al índice del array que devuelve getSteps
 function getStepMode() {
 	return {
-		training: 0,
-		analysis: 1,
-		results: 2,
-		completed: 3
+		upload: 0,
+		training: 1,
+		analysis: 2,
+		results: 3,
+		completed: 4
 	};
 }
 

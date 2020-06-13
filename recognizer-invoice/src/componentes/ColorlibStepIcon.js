@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ImageSearchIcon from '@material-ui/icons/ImageSearch';
 import PublishIcon from '@material-ui/icons/Publish';
 import DescriptionIcon from '@material-ui/icons/Description';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import clsx from 'clsx';
 
 const useColorlibStepIconStyles = makeStyles({
@@ -33,8 +34,9 @@ export default function ColorlibStepIcon(props) {
 
 	const icons = {
 		1: <PublishIcon />,
-		2: <ImageSearchIcon />,
-		3: <DescriptionIcon />
+		2: <PlayCircleOutlineIcon />,
+		3: <ImageSearchIcon />,
+		4: <DescriptionIcon />
 	};
 
 	return (
