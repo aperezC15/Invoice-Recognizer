@@ -1,8 +1,9 @@
 import React from 'react';
 
 import InvoiceState from './context/InvoiceState';
+import Recognizer from './view/Recognizer';
 import Barra from './componentes/home.js';
-import Stepper from './view/stepper.js';
+// import Stepper from './view/stepper.js';
 import './App.css';
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
 		<div className="App">
 			<Barra />
 			<InvoiceState>
-				<Stepper />
+				<Recognizer />
 			</InvoiceState>
 		</div>
 	);
