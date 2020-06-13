@@ -28,7 +28,7 @@ const TrainingForm = () => {
 	const classes = useStyles();
 
 	const invoiceContext = useContext(InvoiceContext);
-	const { setModelId, modelId } = invoiceContext;
+	const { setModelId } = invoiceContext;
 
 	const [ loading, setLoading ] = React.useState(false);
 
@@ -52,18 +52,19 @@ const TrainingForm = () => {
 				if (res.status === 201) {
 					const data = res.data;
 
-					setModelId(data.data.modelId);
+					setModelId(data.data.modelId); // enviar el ID de modelo al state de contexto
+
+					// configurar la información de la alerta
 					setAlertMessage(data.message);
 					setAlertSeverity('success');
-					setLoading(false);
-					setOpen(true);
 
-					console.log('Model ID', modelId);
+					setLoading(false); // ocultar el progreso circular
+					setOpen(true); // mostrar la alerta
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				setLoading(false);
+				setLoading(false); // ocultar el progreso
 			});
 	};
 

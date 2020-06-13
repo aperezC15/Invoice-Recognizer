@@ -1,2 +1,2 @@
 export const SET_MODELID = 'SET_MODELID';
-export const SET_ANALYSIS_RESULT = 'SET_ANALYSIS_RESULT';
+export const SET_FIELDS = 'SET_FIELDS';

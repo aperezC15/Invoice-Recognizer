@@ -67,9 +67,9 @@ const AnalysisForm = () => {
 			.then((res) => {
 				if (res.status === 201) {
 					const { forms, message } = res.data;
-					console.log('response', res.data);
 
 					setAnalysisResult(forms); // envia al estado de contexto el resultado de analisis
+					console.log('forms', forms);
 
 					// configuración de la alerta a mostrar
 					setAlertMessage(message);

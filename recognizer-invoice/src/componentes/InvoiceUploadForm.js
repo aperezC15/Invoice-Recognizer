@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import BackupIcon from '@material-ui/icons/Backup';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from './Alert';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +33,11 @@ const useStyles = makeStyles((theme) => ({
 	instructions: {
 		marginTop: theme.spacing(1),
 		marginBottom: theme.spacing(2)
+	},
+	circularProgress: {
+		position: 'absolute',
+		bottom: '2em',
+		right: '50%'
 	}
 }));
 
@@ -39,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
 const InvoiceUploadForm = () => {
 	const classes = useStyles();
 
+	// estado para el spinner de progreso
+	const [ loading, setLoading ] = React.useState(false);
+
+	// estados para las alertas
 	const [ open, setOpen ] = useState(false);
 	const [ alertMessage, setAlertMessage ] = useState(null);
 	const [ alertSeverity, setAlertSeverity ] = useState(null);
@@ -80,15 +90,20 @@ const InvoiceUploadForm = () => {
 			data.append('facturas', selectedFile[x]);
 		}
 
+		setLoading(true); // mostrar el progreso circular
+
 		axios
 			.post('http://localhost:3001/invoice/blobs', data)
 			.then((res) => {
 				const { message } = res.data;
 
 				if (res.status === 201) {
+					// configurar la alerta
 					setAlertMessage(message);
 					setAlertSeverity('success');
-					setOpen(true);
+
+					setLoading(false); // ocultar el progreso circular
+					setOpen(true); // mostrar la alerta
 				}
 			})
 			.catch((err) => console.log(err));
@@ -130,6 +145,8 @@ const InvoiceUploadForm = () => {
 			</Button>
 
 			<p>{fileMessage}</p>
+
+			{loading && <CircularProgress className={classes.circularProgress} />}
 
 			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
 				<Alert onClose={handleClose} severity={alertSeverity}>

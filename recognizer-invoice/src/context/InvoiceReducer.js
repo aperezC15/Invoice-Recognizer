@@ -1,4 +1,4 @@
-import { SET_MODELID, SET_ANALYSIS_RESULT } from '../types';
+import { SET_MODELID, SET_FIELDS } from '../types';
 
 export default (state, action) => {
 	switch (action.type) {
@@ -7,10 +7,10 @@ export default (state, action) => {
 				...state,
 				modelId: action.payload
 			};
-		case SET_ANALYSIS_RESULT:
+		case SET_FIELDS:
 			return {
 				...state,
-				analysisResult: action.payload
+				fields: action.payload
 			};
 		default:
 			return state;

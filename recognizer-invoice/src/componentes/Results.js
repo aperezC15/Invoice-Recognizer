@@ -1,4 +1,7 @@
 import React from 'react';
+import Fields from './Fields';
+
+// material-ui
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -21,6 +24,7 @@ const Results = () => {
 			<Typography variant="h5" className={classes.instructions}>
 				Los resultados obtenidos son los siguientes:
 			</Typography>
+			<Fields />
 		</div>
 	);
 };
