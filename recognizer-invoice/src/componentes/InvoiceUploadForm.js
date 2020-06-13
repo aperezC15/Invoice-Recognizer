@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // material ui
@@ -6,6 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import BackupIcon from '@material-ui/icons/Backup';
 import Typography from '@material-ui/core/Typography';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -37,7 +43,32 @@ const useStyles = makeStyles((theme) => ({
 const InvoiceUploadForm = () => {
 	const classes = useStyles();
 
+	const [ open, setOpen ] = useState(false);
+	const [ alertMessage, setAlertMessage ] = useState(null);
+	const [ alertSeverity, setAlertSeverity ] = useState(null);
+
 	const [ selectedFile, setSelectedFile ] = useState(null);
+	const [ fileMessage, setFileMessage ] = useState('Ningún archivo seleccionado');
+
+	useEffect(
+		() => {
+			let filesCount = selectedFile ? selectedFile.length : 0;
+			let m =
+				filesCount === 0
+					? 'Ningún archivo seleccionado'
+					: `${filesCount} ${filesCount === 1 ? 'archivo seleccionado' : 'archivos seleccionados'}`;
+			setFileMessage(m);
+		},
+		[ selectedFile ]
+	);
+
+	const handleClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setOpen(false);
+	};
 
 	//verificar que sí se subió un archivo
 	const verEstadoSubir = (event) => {
@@ -58,10 +89,12 @@ const InvoiceUploadForm = () => {
 		axios
 			.post('http://localhost:3001/invoice/blobs', data)
 			.then((res) => {
-				// then print response status
-				console.log(res);
-				if (res.status === 200) {
-					this.mensaje = 'Se ha completado correctamente la subida';
+				const { message } = res.data;
+
+				if (res.status === 201) {
+					setAlertMessage(message);
+					setAlertSeverity('success');
+					setOpen(true);
 				}
 			})
 			.catch((err) => console.log(err));
@@ -101,6 +134,14 @@ const InvoiceUploadForm = () => {
 			>
 				Subir archivos
 			</Button>
+
+			<p>{fileMessage}</p>
+
+			<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+				<Alert onClose={handleClose} severity={alertSeverity}>
+					{alertMessage}
+				</Alert>
+			</Snackbar>
 		</div>
 	);
 };
