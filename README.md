@@ -23,19 +23,19 @@ manual.
 
 El segundo entregable consiste en crear una página web para poder subir las facturas que el usuario desee, al contenedor de azure, y así realizar el entrenamiento posteriormente.
 
-[![PáginaWeb](/imagenes/SegundoEntregable.PNG)](imagenes/SegundoEntregable.PNG)
+[![PáginaWeb](/imagenes/Segundo0.png)](imagenes/Segundo0.png)
 
-[![PáginaWeb](/imagenes/SegundoEntregable1.PNG)](imagenes/SegundoEntregable1.PNG)
+[![PáginaWeb](/imagenes/Segundo1.png)](imagenes/Segundo1.png)
 
-[![PáginaWeb](/imagenes/SegundoEntregable2.PNG)](imagenes/SegundoEntregable2.PNG)
+[![PáginaWeb](/imagenes/Segundo2.png)](imagenes/Segundo2.png)
 
 ## Tercer Entregable
 
 El tercer entregable consiste realizar el análisis de una factura y ver los resultados desde la página web.
 
-[![PáginaWeb](/imagenes/Analisis1.PNG)](imagenes/Analisis1.PNG)
+[![PáginaWeb](/imagenes/Analisis1.png)](imagenes/Analisis1.png)
 
-[![PáginaWeb](/imagenes/Resultados.PNG)](imagenes/Resultados.PNG)
+[![PáginaWeb](/imagenes/Resultados.png)](imagenes/Resultados.png)
 
 ### Tecnologías utilizadas
 
