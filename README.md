@@ -66,5 +66,9 @@ A continuación se muestra en la Tabla I el detalle de cada etapa del proyecto y
 | 5 |  35a918bbbd479cb4fa3c2e4fe9af42c5e2b56e05 | Agregar endpoint para obtener los blobs del contenedor|
 | 6 |   2147c8053debbb238ca4011c89fcfc32154f3d7c | Agregar endpoint para subir facturas al contenedor|
 | 7 |   6f31c32981e6fe888bcd6709227d0264b224f42b | Agregar la carpeta facturas y cambios en el backend|
+| - |  Tercer Entregable||| 
+| 1 |  d7503452e731d21a2343085943357030033ec7f8 | Crear el endpoint para anlizar las facturas|
+| 2 |  3ce99d84adb8dea8e67e6f241eaea5d80e687678 | Agregar funcionalidaad al formulario de análisis de facturas|
+| 3 |   1d0c7bc5ce9820e86a88281bf049c89305542712 | Mostrar los resultados en la tabla|
 
 
