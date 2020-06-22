@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import InvoiceContext from '../context/InvoiceContext';
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,6 +46,22 @@ const AnalysisForm = () => {
 
 	const [ selectedFile, setSelectedFile ] = useState(null);
 
+	//
+	const [ selecFile, setSelecFile ] = useState(null);
+	const [ archivoMessage, setMessage ] = useState('Ningún archivo seleccionado');
+
+	useEffect(
+		() => {
+			let filesCount = selecFile ? selecFile.length : 0;
+			let m =
+				filesCount === 0
+					? 'Ningún archivo seleccionado'
+					: `${filesCount} ${filesCount === 1 ? 'archivo seleccionado' : 'archivos seleccionados'}`;
+			setMessage(m);
+		},
+		[ selecFile ]
+	);
+
 	const invoiceContext = useContext(InvoiceContext);
 	const { modelId, setAnalysisResult } = invoiceContext;
 
@@ -53,6 +69,8 @@ const AnalysisForm = () => {
 	const verEstadoSubir = (event) => {
 		let file = event.target.files[0];
 		setSelectedFile(file);
+		var files = event.target.files;
+		setSelecFile(files);
 	};
 
 	const analyzeForm = () => {
@@ -127,6 +145,8 @@ const AnalysisForm = () => {
 					Analizar
 				</Button>
 			</div>
+
+			<p>{archivoMessage}</p>
 
 			{loading && <CircularProgress className={classes.circularProgress} />}
 

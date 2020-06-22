@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-	return [ 'Subir Facturas', 'Entrenamiento', 'Análisis', 'Resultados' ];
+	return [ 'Subir formatos de asistencias', 'Entrenamiento', 'Análisis', 'Resultados' ];
 }
 
 // el modo del step es de acuerdo al índice del array que devuelve getSteps

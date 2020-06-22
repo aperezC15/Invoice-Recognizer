@@ -18,13 +18,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 import InvoiceContext from '../context/InvoiceContext';
 
-// const rows = [
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' },
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' },
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' }
-// ];
-
-const useStyles1 = makeStyles((theme) => ({
+const useStyles2 = makeStyles((theme) => ({
 	root: {
 		flexShrink: 0,
 		marginLeft: theme.spacing(2.5)
@@ -36,45 +30,45 @@ const useStyles1 = makeStyles((theme) => ({
 	}
 }));
 
-function TablePaginationActions(props) {
-	const classes = useStyles1();
+function TablaPaginationActions(props) {
+	const classes = useStyles2();
 	const theme = useTheme();
-	const { count, page, rowsPerPage, onChangePage } = props;
+	const { cant, pag, rowsPerPage, onChangePage } = props;
 
 	const handleFirstPageButtonClick = (event) => {
 		onChangePage(event, 0);
 	};
 
 	const handleBackButtonClick = (event) => {
-		onChangePage(event, page - 1);
+		onChangePage(event, pag - 1);
 	};
 
 	const handleNextButtonClick = (event) => {
-		onChangePage(event, page + 1);
+		onChangePage(event, pag + 1);
 	};
 
 	const handleLastPageButtonClick = (event) => {
-		onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+		onChangePage(event, Math.max(0, Math.ceil(cant / rowsPerPage) - 1));
 	};
 
 	return (
 		<div className={classes.root}>
-			<IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
+			<IconButton onClick={handleFirstPageButtonClick} disabled={pag === 0} aria-label="first page">
 				{theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
 			</IconButton>
-			<IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+			<IconButton onClick={handleBackButtonClick} disabled={pag === 0} aria-label="previous page">
 				{theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
 			</IconButton>
 			<IconButton
 				onClick={handleNextButtonClick}
-				disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+				disabled={pag >= Math.ceil(cant / rowsPerPage) - 1}
 				aria-label="next page"
 			>
 				{theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
 			</IconButton>
 			<IconButton
 				onClick={handleLastPageButtonClick}
-				disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+				disabled={pag >= Math.ceil(cant / rowsPerPage) - 1}
 				aria-label="last page"
 			>
 				{theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
@@ -83,7 +77,7 @@ function TablePaginationActions(props) {
 	);
 }
 
-TablePaginationActions.propTypes = {
+TablaPaginationActions.propTypes = {
 	count: PropTypes.number.isRequired,
 	onChangePage: PropTypes.func.isRequired,
 	page: PropTypes.number.isRequired,
@@ -96,16 +90,14 @@ TablePaginationActions.propTypes = {
 // 	}
 // });
 
-const Fields = () => {
-	const classes = useStyles1();
+const Tabla = () => {
+	const classes = useStyles2();
 
-	const invoiceContext = useContext(InvoiceContext);
-	const { fields } = invoiceContext;
+	//const invoiceContext = useContext(InvoiceContext);
+	//const { celdas } = invoiceContext;
 
-	const [ page, setPage ] = React.useState(0);
+	const [ pag, setPage ] = React.useState(0);
 	const [ rowsPerPage, setRowsPerPage ] = React.useState(5);
-
-	// const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -118,40 +110,29 @@ const Fields = () => {
 
 	return (
 		<TableContainer component={Paper}>
-			<Table aria-label="custom pagination table">
+			<Table size="medium" aria-label="custom pagination table">
 				<TableHead>
 					<TableRow>
 						<TableCell className={classes.encabezado}>Número</TableCell>
-						<TableCell className={classes.encabezado}>Foto</TableCell>
-						<TableCell className={classes.encabezado}>Edad del ciudadano</TableCell>
-						<TableCell className={classes.encabezado}>Nombre del Ciudadano</TableCell>
-						<TableCell className={classes.encabezado}>Código de Barras</TableCell>
+						<TableCell className={classes.encabezado}>Edad</TableCell>
+						<TableCell className={classes.encabezado}>Nombre del ciudadano</TableCell>
 						<TableCell className={classes.encabezado}>Marca de voto</TableCell>
-						<TableCell className={classes.encabezado}>Firma o impresión dactilar </TableCell>
+						<TableCell className={classes.encabezado}>Firma</TableCell>
+						<TableCell className={classes.encabezado}>Confirmar</TableCell>
 					</TableRow>
 				</TableHead>
-				<TableBody>
-					{(rowsPerPage > 0
-						? fields.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-						: fields).map((row, i) => (
-						<TableRow key={`${row.labelText}${i}`}>
-							<TableCell style={{ width: 100 }} align="right">
-								{row.valueText}
-							</TableCell>
-						</TableRow>
-					))}
-				</TableBody>
+				<TableBody />
 				<TableFooter>
 					<TableRow>
 						<TablePagination
 							rowsPerPageOptions={[ 5, 10, 25, { label: 'Todo', value: -1 } ]}
 							colSpan={3}
-							count={fields.length}
+							count={10}
 							rowsPerPage={rowsPerPage}
-							page={page}
+							page={pag}
 							onChangePage={handleChangePage}
 							onChangeRowsPerPage={handleChangeRowsPerPage}
-							ActionsComponent={TablePaginationActions}
+							ActionsComponent={TablaPaginationActions}
 						/>
 					</TableRow>
 				</TableFooter>
@@ -160,4 +141,4 @@ const Fields = () => {
 	);
 };
 
-export default Fields;
+export default Tabla;
