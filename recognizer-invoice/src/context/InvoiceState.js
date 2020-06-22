@@ -29,7 +29,7 @@ const InvoiceState = ({ children }) => {
 	};
 
 	const setFields = (fields) => {
-		debugger;
+		//debugger;
 		const labels = Object.keys(fields),
 			keys = Object.values(fields);
 		const fieldCount = labels.length;
