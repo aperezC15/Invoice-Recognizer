@@ -14,7 +14,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
-		cb(null, 'facturas');
+		cb(null, 'asistencias');
 	},
 	filename: function(req, file, cb) {
 		cb(null, Date.now() + file.originalname);
@@ -27,7 +27,7 @@ app.get('/invoice/blobs', async (req, res, next) => {
 	const blobs = [];
 
 	// Obtener el contenedor
-	const containerName = 'formrecocontainer';
+	const containerName = 'contenedorasistencia';
 	const containerClient = blobService.getContainerClient(containerName);
 
 	//Listar los PDF del contenedor
@@ -39,13 +39,13 @@ app.get('/invoice/blobs', async (req, res, next) => {
 
 app.post('/invoice/blobs', upload.array('facturas', 5), async (req, res, next) => {
 	let respuesta = {
-		message: 'Facturas agregadas al contenedor exitosamente!',
+		message: 'Asistencias agregadas al contenedor exitosamente!',
 		data: [], // nombre de las facturas subidas exitosamente
 		status: 201 // por defecto el estado http es 201 (creado)
 	};
 
 	// Obtener el contenedor
-	const containerName = 'formrecocontainer';
+	const containerName = 'contenedorasistencia';
 	const containerClient = blobService.getContainerClient(containerName);
 
 	// Obtener el nombre y la ruta de las facturas subidas
