@@ -10,8 +10,7 @@ export default (state, action) => {
 		case SET_FIELDS:
 			return {
 				...state,
-				fields: action.payload,
-				resultados: action.payload
+				fields: action.payload
 			};
 		case SET_TABLES:
 			return {

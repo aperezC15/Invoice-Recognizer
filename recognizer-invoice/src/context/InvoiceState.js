@@ -37,14 +37,16 @@ const InvoiceState = ({ children }) => {
 		//let filas = 10;
 		const dpi = [];
 		const valores = [];
-		const nombre = [];
+		const name = [];
 		const nombres = [];
 		const result = [];
 		//console.log('lenght: ', typeof grupos[0]);
 		//expresion regular para DPI
 		var evaluardpi = /\d{4}\s\d{5}\s\d{4}/;
+		//expresiones regulares para nombres
 		var evaluarnombre = /[A-Z]+,\s[A-Z]+/;
 		var evaluarnombre2 = /[A-Z]+\s,\s[A-Z]+/;
+
 		//guardar en un array los textos
 		for (let i = 0; i < fieldCount; i++) {
 			valores.push(keys[i].value);
@@ -54,33 +56,34 @@ const InvoiceState = ({ children }) => {
 		//obtener los DPI
 		for (let i = 0; i < fieldCount; i++) {
 			if (valores[i].match(evaluardpi)) {
-				dpi.push({ numero: keys[i].value });
+				dpi.push(keys[i].value);
 			}
 		}
-		console.log('array DPI', dpi);
+		//console.log('array DPI', dpi);
 
-		//obtener los nombres
+		//evaluar e ir guardando los nombres
 		for (let i = 0; i < fieldCount; i++) {
 			if (valores[i].match(evaluarnombre) || valores[i].match(evaluarnombre2)) {
-				nombre.push({ nombre: keys[i].value });
+				name.push(keys[i].value);
 			}
 		}
-		let j = 1;
-		//guardar solo los nombres
-		for (let i = 0; i < 10; i++) {
-			nombres.push(nombre[j]);
+		debugger;
+		let j = 0;
+		//guardar nombres excepto República
+		for (let i = 0; i < name.length; i++) {
+			if (name[j] !== 'REPUBLICA DE GUATEMALA, C. A.') {
+				nombres.push(name[j]);
+			}
 			j++;
 		}
-		console.log('array nombres', nombres);
+		console.log('array name', name);
+		//debugger;
+		//guardar los nombres y DPI en un arreglo
+		for (let f = 0; f < dpi.length; f++) {
+			result.push({ numero: dpi[f], nombre: nombres[f] });
+		}
 
-		/*obtener los nombres
-		//guardar en result los grupos para mostrarlos por fila
-		for (let f = 0; f < filas; f++) {
-			if (result[f] === undefined) {
-				result[f] = [];
-			}
-			result[f].push(grupos[f]);
-		}*/
+		console.log('array nombres', nombres);
 
 		dispatch({
 			type: SET_FIELDS,
@@ -108,6 +111,7 @@ const InvoiceState = ({ children }) => {
 	}*/
 
 	return (
+		//retornar
 		<InvoiceContext.Provider
 			value={{
 				modelId: state.modelId,

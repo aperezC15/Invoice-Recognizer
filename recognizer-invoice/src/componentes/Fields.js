@@ -18,12 +18,6 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 import InvoiceContext from '../context/InvoiceContext';
 
-// const rows = [
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' },
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' },
-// 	{ labelText: 'IBAN', valueText: 'ES12 3456 789 1' }
-// ];
-
 const useStyles1 = makeStyles((theme) => ({
 	root: {
 		flexShrink: 0,
@@ -32,7 +26,8 @@ const useStyles1 = makeStyles((theme) => ({
 	encabezado: {
 		backgroundColor: '#0277bd',
 		color: 'white',
-		fontSize: 14
+		fontSize: 14,
+		textJustify: 'center'
 	}
 }));
 
@@ -100,6 +95,7 @@ const Fields = () => {
 	const classes = useStyles1();
 
 	const invoiceContext = useContext(InvoiceContext);
+	const { resultado } = invoiceContext;
 	const { fields } = invoiceContext;
 
 	const [ page, setPage ] = React.useState(0);
@@ -129,10 +125,13 @@ const Fields = () => {
 				<TableBody>
 					{(rowsPerPage > 0
 						? fields.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-						: fields).map((row, i) => (
+						: resultado).map((row, i) => (
 						<TableRow key={`${row.labelText}${i}`}>
-							<TableCell style={{ width: 100 }} align="right">
-								{row.valueText}
+							<TableCell style={{ width: 150 }} align="right">
+								{row.numero}
+							</TableCell>
+							<TableCell style={{ width: 500 }} align="right">
+								{row.nombre}
 							</TableCell>
 						</TableRow>
 					))}
@@ -140,7 +139,8 @@ const Fields = () => {
 				<TableFooter>
 					<TableRow>
 						<TablePagination
-							rowsPerPageOptions={[ 5, 10, 25, { label: 'Todo', value: -1 } ]}
+							//rowsPerPageOptions={[ 5, 10, 25, { label: 'Todo', value: -1 } ]}
+							rowsPerPageOptions={[ 5, 10, 25 ]}
 							colSpan={3}
 							count={fields.length}
 							rowsPerPage={rowsPerPage}

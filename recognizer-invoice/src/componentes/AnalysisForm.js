@@ -63,7 +63,7 @@ const AnalysisForm = () => {
 	);
 
 	const invoiceContext = useContext(InvoiceContext);
-	const { modelId, setAnalysisResult, setResult } = invoiceContext;
+	const { modelId, setAnalysisResult } = invoiceContext;
 
 	//verificar que sí se subió un archivo
 	const verEstadoSubir = (event) => {
@@ -88,8 +88,6 @@ const AnalysisForm = () => {
 
 					setAnalysisResult(forms); // envia al estado de contexto el resultado de analisis
 					console.log('forms', forms);
-
-					//setResult(forms);
 
 					// configuración de la alerta a mostrar
 					setAlertMessage(message);
