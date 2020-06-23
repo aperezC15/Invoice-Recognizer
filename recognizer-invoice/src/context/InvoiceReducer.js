@@ -10,12 +10,13 @@ export default (state, action) => {
 		case SET_FIELDS:
 			return {
 				...state,
-				fields: action.payload
+				fields: action.payload,
+				resultados: action.payload
 			};
 		case SET_TABLES:
 			return {
 				...state,
-				tables: action.payload
+				resultados: action.payload
 			};
 		default:
 			return state;

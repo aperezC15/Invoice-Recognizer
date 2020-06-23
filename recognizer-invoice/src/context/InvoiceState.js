@@ -21,11 +21,11 @@ const InvoiceState = ({ children }) => {
 
 	const setAnalysisResult = (result) => {
 		const { fields } = result[0];
-		const { cells } = result[0];
-		const { rows } = result[0];
+		//const { cells } = result[0];
+		//const { rows } = result[0];
 
 		setFields(fields);
-		getTables();
+		//getTables();
 	};
 
 	const setFields = (fields) => {
@@ -34,38 +34,61 @@ const InvoiceState = ({ children }) => {
 			keys = Object.values(fields);
 		const fieldCount = labels.length;
 		//calcular filas
-		let filas = Math.ceil(fieldCount / 5);
-		const grupos = [];
+		//let filas = 10;
+		const dpi = [];
+		const valores = [];
+		const nombre = [];
+		const nombres = [];
 		const result = [];
-		let pg = 0;
 		//console.log('lenght: ', typeof grupos[0]);
-
-		//guardar 5 fields en cada grupo
+		//expresion regular para DPI
+		var evaluardpi = /\d{4}\s\d{5}\s\d{4}/;
+		var evaluarnombre = /[A-Z]+,\s[A-Z]+/;
+		var evaluarnombre2 = /[A-Z]+\s,\s[A-Z]+/;
+		//guardar en un array los textos
 		for (let i = 0; i < fieldCount; i++) {
-			if (grupos[pg] === undefined || grupos[pg].length < 5) {
-				if (grupos[pg] === undefined) {
-					grupos[pg] = [];
-				}
-				grupos[pg].push({ valueText: keys[i].value });
-			} else {
-				pg++;
+			valores.push(keys[i].value);
+		}
+		//console.log(valores);
+
+		//obtener los DPI
+		for (let i = 0; i < fieldCount; i++) {
+			if (valores[i].match(evaluardpi)) {
+				dpi.push({ numero: keys[i].value });
 			}
 		}
+		console.log('array DPI', dpi);
 
+		//obtener los nombres
+		for (let i = 0; i < fieldCount; i++) {
+			if (valores[i].match(evaluarnombre) || valores[i].match(evaluarnombre2)) {
+				nombre.push({ nombre: keys[i].value });
+			}
+		}
+		let j = 1;
+		//guardar solo los nombres
+		for (let i = 0; i < 10; i++) {
+			nombres.push(nombre[j]);
+			j++;
+		}
+		console.log('array nombres', nombres);
+
+		/*obtener los nombres
 		//guardar en result los grupos para mostrarlos por fila
 		for (let f = 0; f < filas; f++) {
 			if (result[f] === undefined) {
 				result[f] = [];
 			}
 			result[f].push(grupos[f]);
-		}
-		console.log(result);
+		}*/
+
 		dispatch({
 			type: SET_FIELDS,
 			payload: result
 		});
 	}; //end setFields
 
+	/*
 	function getCells(cells) {
 		var celdas = [ cells.text ];
 		return celdas;
@@ -82,7 +105,7 @@ const InvoiceState = ({ children }) => {
 		//const tabla = Object.values(rows);
 		//const celds = rows.map(getName);
 		console.log(pages);
-	}
+	}*/
 
 	return (
 		<InvoiceContext.Provider

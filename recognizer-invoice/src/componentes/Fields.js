@@ -121,11 +121,9 @@ const Fields = () => {
 			<Table aria-label="custom pagination table">
 				<TableHead>
 					<TableRow>
-						<TableCell className={classes.encabezado}>Número</TableCell>
-						<TableCell className={classes.encabezado}>DPI</TableCell>
-						<TableCell className={classes.encabezado}>Edad</TableCell>
+						<TableCell className={classes.encabezado}>Número de Empadronamiento</TableCell>
 						<TableCell className={classes.encabezado}>Nombre del Ciudadano</TableCell>
-						<TableCell className={classes.encabezado}>Código de Barras</TableCell>
+						<TableCell className={classes.encabezado}>Firma</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
