@@ -20,18 +20,124 @@ const InvoiceState = ({ children }) => {
 	};
 
 	const setAnalysisResult = (result) => {
-		const { fields } = result[0];
-		//const { cells } = result[0];
-		//const { rows } = result[0];
+		const field = [];
+		const { pages } = result[0];
 
-		setFields(fields);
-		//getTables();
+		//obtener fields por página
+		for (let i = 0; i < result.length; i++) {
+			const { fields } = result[i];
+			field.push(fields);
+		}
+
+		console.log('fields', field);
+		console.log('pages con destructuracion', pages);
+		//console.log('imprimir fields', fields);
+
+		//setFields(field);
+		getTables(pages);
 	};
 
-	const setFields = (fields) => {
+	const getTables = (pages) => {
+		const eachTable = [];
+		const arrayrows = [];
+		const countFilas = [];
+		const eachRow = [];
+		const allCells = [];
+		const countCellsRows = [];
+		const eachCells = [];
+		const itemCells = [];
+		const textCells = [];
+		const countText = [];
+		const textPerRows = [];
+		let k = 0;
+		let c = 0;
+
+		//obtener las tables
+		for (let i = 0; i < pages.length; i++) {
+			eachTable.push(pages[i].tables);
+		}
+
+		console.log('imprimir tablas', eachTable);
+
+		//obtener las array para llegar a las filas
+		for (let i = 0; i < eachTable.length; i++) {
+			eachTable[i].forEach((rows) => arrayrows.push(rows));
+		}
+
+		console.log('imprimir filas', arrayrows);
+
+		//obtener las rows
+		for (let i = 0; i < arrayrows.length; i++) {
+			const { rows } = arrayrows[i];
+			eachRow.push(rows);
+		}
+		console.log('imprimir cada fila', eachRow);
+
+		//obtener arreglo de celdas
+		for (let i = 0; i < eachTable.length; i++) {
+			eachRow[i].forEach((cells) => allCells.push(cells));
+		}
+		console.log('imprimir arreglo de celdas', allCells);
+
+		//obtener cada cells, cada cells incluye un array
+		for (let i = 0; i < allCells.length; i++) {
+			const { cells } = allCells[i];
+			eachCells.push(cells);
+		}
+		console.log('imprimir cada arreglo de celda', eachCells);
+
+		//obtener cada posicion de los arreglos de eachCells
+		for (let i = 0; i < allCells.length; i++) {
+			eachCells[i].forEach((text) => itemCells.push(text));
+		}
+		console.log('imprimir item de los arreglos de celdas', itemCells);
+
+		//obtener los textos de cada item de itemCells
+		for (let i = 0; i < itemCells.length; i++) {
+			const { text } = itemCells[i];
+			textCells.push(text);
+		}
+		console.log('imprimir textos', textCells);
+
+		/*********************************************************/
+		//obtener la cantidad de filas por tabla
+		for (let i = 0; i < arrayrows.length; i++) {
+			const { rowCount } = arrayrows[i];
+			countFilas.push(rowCount);
+		}
+
+		console.log('imprimir cantidad filas', countFilas);
+
+		//obtener la cantidad de items por arreglo de celda
+		for (let i = 0; i < arrayrows.length; i++) {
+			countCellsRows.push(eachCells[i].length);
+		}
+		console.log('imprimir cantidad de items por fila', countCellsRows);
+
+		//calcular la cantidad de elementos que se van a dividir
+		for (let i = 0; i < arrayrows.length; i++) {
+			countText.push(countFilas[i] * countCellsRows[i]);
+		}
+		console.log('imprimir cAlculo de elmentos a guardar', countText);
+
+		//guardar los textos por cantidad de elementos por fila
+		for (let i = 0; i < arrayrows.length; i++) {
+			for (let j = 0; j < countText[i]; j++) {
+				if (textPerRows[k] === undefined) {
+					textPerRows[k] = [];
+				}
+				textPerRows[k].push(textCells[c]);
+				c++;
+			}
+			k++;
+		}
+		console.log('imprimir textos por tabla', textPerRows);
+	};
+
+	const setFields = (field) => {
 		//debugger;
-		const labels = Object.keys(fields),
-			keys = Object.values(fields);
+		const labels = Object.keys(field),
+			keys = Object.values(field);
 		const fieldCount = labels.length;
 		//calcular filas
 		//let filas = 10;
@@ -67,7 +173,7 @@ const InvoiceState = ({ children }) => {
 				name.push(keys[i].value);
 			}
 		}
-		debugger;
+
 		let j = 0;
 		//guardar nombres excepto República
 		for (let i = 0; i < name.length; i++) {
@@ -76,14 +182,14 @@ const InvoiceState = ({ children }) => {
 			}
 			j++;
 		}
-		console.log('array name', name);
+		//console.log('array name', name);
 		//debugger;
 		//guardar los nombres y DPI en un arreglo
 		for (let f = 0; f < dpi.length; f++) {
 			result.push({ numero: dpi[f], nombre: nombres[f] });
 		}
 
-		console.log('array nombres', nombres);
+		//console.log('array completos', result);
 
 		dispatch({
 			type: SET_FIELDS,
