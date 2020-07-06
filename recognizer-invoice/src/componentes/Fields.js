@@ -97,9 +97,9 @@ const Fields = () => {
 	const invoiceContext = useContext(InvoiceContext);
 	const { resultado } = invoiceContext;
 	const { fields } = invoiceContext;
-
+	console.log('resultado', resultado);
 	const [ page, setPage ] = React.useState(0);
-	const [ rowsPerPage, setRowsPerPage ] = React.useState(5);
+	const [ rowsPerPage, setRowsPerPage ] = React.useState(10);
 
 	// const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
