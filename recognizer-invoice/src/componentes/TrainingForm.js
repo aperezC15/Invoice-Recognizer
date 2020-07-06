@@ -54,6 +54,7 @@ const TrainingForm = () => {
 
 					setModelId(data.data.modelId); // enviar el ID de modelo al state de contexto
 
+					console.log(data.data.modelId);
 					// configurar la información de la alerta
 					setAlertMessage(data.message);
 					setAlertSeverity('success');
