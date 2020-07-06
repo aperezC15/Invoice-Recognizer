@@ -1,4 +1,4 @@
-import { SET_MODELID, SET_FIELDS, SET_TABLES } from '../types';
+import { SET_MODELID, SET_FIELDS, SET_TABLES, GET_TABLES } from '../types';
 
 export default (state, action) => {
 	switch (action.type) {
@@ -11,6 +11,11 @@ export default (state, action) => {
 			return {
 				...state,
 				fields: action.payload
+			};
+		case GET_TABLES:
+			return {
+				...state,
+				tables: action.payload
 			};
 		case SET_TABLES:
 			return {
