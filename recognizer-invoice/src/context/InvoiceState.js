@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
 import InvoiceReducer from './InvoiceReducer';
-import { SET_MODELID, SET_FIELDS } from '../types';
+import { SET_MODELID, SET_FIELDS, GET_TABLES } from '../types';
 import InvoiceContext from './InvoiceContext';
 
 const initialState = {
-	modelId: '73310f24-95e1-4116-b70c-d04725a5755b',
+	modelId: '97637b5e-1261-4a91-b116-76ba81c88b43',
 	fields: []
 	//tables: []
 };
@@ -23,6 +23,16 @@ const InvoiceState = ({ children }) => {
 		const field = [];
 		const { pages } = result[0];
 
+		const filteredData = result.map((r) => {
+			const filteredFields = getFilteredFields(r.fields);
+			return { fields: filteredFields };
+		});
+
+		const filteredPages = getFilteredPages(pages);
+
+		console.log('filterData: ', filteredData);
+		console.log('filterPages: ', filteredPages);
+
 		//obtener fields por página
 		for (let i = 0; i < result.length; i++) {
 			const { fields } = result[i];
@@ -33,188 +43,116 @@ const InvoiceState = ({ children }) => {
 		console.log('pages con destructuracion', pages);
 		//console.log('imprimir fields', fields);
 
-		//setFields(field);
-		getTables(pages);
+		//setData(field);
+		//getTables(pages);
 	};
 
-	const getTables = (pages) => {
-		const eachTable = [];
-		const arrayrows = [];
-		const countFilas = [];
-		const eachRow = [];
-		const allCells = [];
-		const countCellsRows = [];
-		const eachCells = [];
-		const itemCells = [];
-		const textCells = [];
-		const countText = [];
-		const textPerRows = [];
-		let k = 0;
-		let c = 0;
+	//clasificar los fields
+	function getFilteredFields(fields) {
+		const values = getValues(fields);
+		return filterValues(values);
+	}
 
-		//obtener las tables
-		for (let i = 0; i < pages.length; i++) {
-			eachTable.push(pages[i].tables);
-		}
+	function verificarNombre(value) {
+		const expresionNombre = /[A-Z]+,\s[A-Z]+/;
+		const expresionNombre2 = /[A-Z]+\s,\s[A-Z]+/;
+		//falta la segunda expresion
+		return value.match(expresionNombre) || value.match(expresionNombre2);
+	}
 
-		console.log('imprimir tablas', eachTable);
+	function verificarDpi(value) {
+		const expresionDpi = /\d{4}\s\d{5}\s\d{4}/;
+		return value.match(expresionDpi);
+	}
 
-		//obtener las array para llegar a las filas
-		for (let i = 0; i < eachTable.length; i++) {
-			eachTable[i].forEach((rows) => arrayrows.push(rows));
-		}
+	function getValues(fields) {
+		const keys = Object.keys(fields);
+		const values = [];
 
-		console.log('imprimir filas', arrayrows);
+		keys.forEach((k) => values.push(fields[k].value));
+		return values;
+	}
 
-		//obtener las rows
-		for (let i = 0; i < arrayrows.length; i++) {
-			const { rows } = arrayrows[i];
-			eachRow.push(rows);
-		}
-		console.log('imprimir cada fila', eachRow);
+	function filterValues(values) {
+		const votantes = [];
+		let dpiActual = null;
+		let name = '';
 
-		//obtener arreglo de celdas
-		for (let i = 0; i < eachTable.length; i++) {
-			eachRow[i].forEach((cells) => allCells.push(cells));
-		}
-		console.log('imprimir arreglo de celdas', allCells);
+		values.forEach((v) => {
+			const esDpi = verificarDpi(v);
+			if (esDpi) {
+				if (dpiActual) votantes.push({ dpi: dpiActual, nombre: '' });
+				dpiActual = v;
+				return;
+			}
 
-		//obtener cada cells, cada cells incluye un array
-		for (let i = 0; i < allCells.length; i++) {
-			const { cells } = allCells[i];
-			eachCells.push(cells);
-		}
-		console.log('imprimir cada arreglo de celda', eachCells);
+			const esNombre = verificarNombre(v);
+			if (esNombre) {
+				//debugger;
+				let posicionBarras = v.indexOf('*');
 
-		//obtener cada posicion de los arreglos de eachCells
-		for (let i = 0; i < allCells.length; i++) {
-			eachCells[i].forEach((text) => itemCells.push(text));
-		}
-		console.log('imprimir item de los arreglos de celdas', itemCells);
-
-		//obtener los textos de cada item de itemCells
-		for (let i = 0; i < itemCells.length; i++) {
-			const { text } = itemCells[i];
-			textCells.push(text);
-		}
-		console.log('imprimir textos', textCells);
-
-		/*********************************************************/
-		//obtener la cantidad de filas por tabla
-		for (let i = 0; i < arrayrows.length; i++) {
-			const { rowCount } = arrayrows[i];
-			countFilas.push(rowCount);
-		}
-
-		console.log('imprimir cantidad filas', countFilas);
-
-		//obtener la cantidad de items por arreglo de celda
-		for (let i = 0; i < arrayrows.length; i++) {
-			countCellsRows.push(eachCells[i].length);
-		}
-		console.log('imprimir cantidad de items por fila', countCellsRows);
-
-		//calcular la cantidad de elementos que se van a dividir
-		for (let i = 0; i < arrayrows.length; i++) {
-			countText.push(countFilas[i] * countCellsRows[i]);
-		}
-		console.log('imprimir cAlculo de elmentos a guardar', countText);
-
-		//guardar los textos por cantidad de elementos por fila
-		for (let i = 0; i < arrayrows.length; i++) {
-			for (let j = 0; j < countText[i]; j++) {
-				if (textPerRows[k] === undefined) {
-					textPerRows[k] = [];
+				if (posicionBarras > -1) {
+					name = v.substring(0, posicionBarras).trim();
+				} else {
+					name = v;
 				}
-				textPerRows[k].push(textCells[c]);
-				c++;
+				if (dpiActual == null) votantes.push({ dpi: '', nombre: name });
+				else {
+					votantes.push({ dpi: dpiActual, nombre: name });
+					dpiActual = null;
+				}
 			}
-			k++;
-		}
-		console.log('imprimir textos por tabla', textPerRows);
+		});
+
+		return votantes;
+	}
+
+	//Obtener las tablas de las páginas
+	const getFilteredPages = (pages) => {
+		const filteredPages = pages.map((p) => {
+			const { tables } = p;
+			const { pageNumber } = p;
+			const filteredTables = getFilteredTables(tables);
+			return { filteredTables, pageNumber };
+		});
+
+		return { tables: filteredPages };
 	};
 
-	const setFields = (field) => {
-		//debugger;
-		const labels = Object.keys(field),
-			keys = Object.values(field);
-		const fieldCount = labels.length;
-		//calcular filas
-		//let filas = 10;
-		const dpi = [];
-		const valores = [];
-		const name = [];
-		const nombres = [];
-		const result = [];
-		//console.log('lenght: ', typeof grupos[0]);
-		//expresion regular para DPI
-		var evaluardpi = /\d{4}\s\d{5}\s\d{4}/;
-		//expresiones regulares para nombres
-		var evaluarnombre = /[A-Z]+,\s[A-Z]+/;
-		var evaluarnombre2 = /[A-Z]+\s,\s[A-Z]+/;
-
-		//guardar en un array los textos
-		for (let i = 0; i < fieldCount; i++) {
-			valores.push(keys[i].value);
-		}
-		//console.log(valores);
-
-		//obtener los DPI
-		for (let i = 0; i < fieldCount; i++) {
-			if (valores[i].match(evaluardpi)) {
-				dpi.push(keys[i].value);
-			}
-		}
-		//console.log('array DPI', dpi);
-
-		//evaluar e ir guardando los nombres
-		for (let i = 0; i < fieldCount; i++) {
-			if (valores[i].match(evaluarnombre) || valores[i].match(evaluarnombre2)) {
-				name.push(keys[i].value);
-			}
-		}
-
-		let j = 0;
-		//guardar nombres excepto República
-		for (let i = 0; i < name.length; i++) {
-			if (name[j] !== 'REPUBLICA DE GUATEMALA, C. A.') {
-				nombres.push(name[j]);
-			}
-			j++;
-		}
-		//console.log('array name', name);
-		//debugger;
-		//guardar los nombres y DPI en un arreglo
-		for (let f = 0; f < dpi.length; f++) {
-			result.push({ numero: dpi[f], nombre: nombres[f] });
-		}
-
-		//console.log('array completos', result);
-
-		dispatch({
-			type: SET_FIELDS,
-			payload: result
+	//Obtener las filas de cada tabla
+	function getFilteredTables(tables) {
+		const filteredTables = tables.map((t) => {
+			const { rows } = t;
+			const filteredRows = getFilteredRows(rows);
+			return filteredRows;
 		});
-	}; //end setFields
 
-	/*
-	function getCells(cells) {
-		var celdas = [ cells.text ];
-		return celdas;
+		return filteredTables;
 	}
 
-	function getName(tables) {
-		var fullname = [ tables.columnCount ];
-		return fullname;
+	//Obtener las celdas de cada fila
+	function getFilteredRows(rows) {
+		const filteredRows = rows.map((r) => {
+			const { cells } = r;
+			return getFilteredCells(cells);
+		});
+
+		return filteredRows;
 	}
 
-	function getTables(pages) {
-		//var arreglo = [ { nombre: 'Ana', edad: 10 }, { nombre: 'Lety', edad: 20 }, { nombre: 'Rosa', edad: 30 } ];
+	//Obtener los textos de cada celda
+	function getFilteredCells(cells) {
+		//debugger;
+		//let isHeader = false;
+		let filteredRows = [];
 
-		//const tabla = Object.values(rows);
-		//const celds = rows.map(getName);
-		console.log(pages);
-	}*/
+		const filteredCells = cells.map((c) => c.text);
+		const filtered = filterValues(filteredCells);
+
+		filteredRows = filteredRows.length > 0 ? [ ...filteredRows, ...filtered ] : filtered;
+
+		return filteredRows;
+	}
 
 	return (
 		//retornar
